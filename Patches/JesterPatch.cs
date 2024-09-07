@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 
-namespace ThomasTheJester;
+namespace ThomasTheJester.Patches;
 
 [HarmonyPatch(typeof(JesterAI))]
-public class JesterPatch
+public sealed class JesterPatch
 {
     [HarmonyPatch("Start")]
     [HarmonyPostfix]
@@ -16,8 +16,8 @@ public class JesterPatch
     [HarmonyPostfix]
     public static void SetJesterInitialValues(JesterAI __instance)
     {
-        if (Plugin.ModConfig.PatchPopUpTimerEntry.Value)
-        { 
+        if (Plugin.ModConfig.ShouldPatchPopUpTimer())
+        {
             __instance.popUpTimer = Plugin.Music.length;
         }
     }
